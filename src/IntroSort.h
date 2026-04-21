@@ -60,9 +60,9 @@ private:
         int i = left - 1;
         int j = right + 1;
         while (true) {
-            do { i++; } while (arr[i] < pivot);
-            do { j--; } while (arr[j] > pivot);
-            if (i >= j) return j;
+            do { i++; } while (arr[i] < pivot); // Szukaj elementu po lewej, który powinien byæ po prawej
+            do { j--; } while (arr[j] > pivot); // Szukaj elementu po prawej, który powinien byæ po lewej
+            if (i >= j) return j; // Jeœli indeksy siê spotka³y lub minê³y, koñczymy partycjê
             std::swap(arr[i], arr[j]);
         }
     }
@@ -70,18 +70,23 @@ private:
     
     static void heapify(T arr[], int n, int i, int offset) {
         int largest = i;
-        int l = 2 * i + 1;
-        int r = 2 * i + 2;
+        int l = 2 * i + 1; // Lewe dziecko
+        int r = 2 * i + 2; // Prawe dziecko
+        // Je¿eli lewe dziecko jest wiêksze ni¿ rodzic
         if (l < n && arr[offset + l] > arr[offset + largest]) largest = l;
+        // Je¿eli prawe dziecko jest wiêksze ni¿ rodzic
         if (r < n && arr[offset + r] > arr[offset + largest]) largest = r;
+        // Je¿eli najwiêkszym nie jest rodzic
         if (largest != i) {
             std::swap(arr[offset + i], arr[offset + largest]);
             heapify(arr, n, largest, offset);
         }
     }
     static void heapSort(T arr[], int n, int offset) {
+        // Stwórz kopiec
         for (int i = n / 2 - 1; i >= 0; i--) 
             heapify(arr, n, i, offset);
+
         for (int i = n - 1; i > 0; i--) {
             std::swap(arr[offset], arr[offset + i]);
             heapify(arr, i, 0, offset);

@@ -19,7 +19,6 @@ private:
         int p = partition(arr, left, right);
 
         // Rekurencyjne sortowanie lewej i prawej strony
-        // Uwaga: Schemat Hoare'a dzieli tablicê na [left...p] i [p+1...right]
         solve(arr, left, p);
         solve(arr, p + 1, right);
     }
